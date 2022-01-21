@@ -1,0 +1,54 @@
+# class_names = load_class_names(class_name)
+
+    # image = imgutils.load_image(img_path)
+    # image = np.array(image)
+    # image = tf.expand_dims(image, 0)
+    # resized_frame = resize_image(image, (model_size[0],model_size[1]))
+    # pred = model.predict(resized_frame)
+
+    # boxes, scores, classes, nums = output_boxes(
+    #     pred, model_size,
+    #     max_output_size=max_output_size,
+    #     max_output_size_per_class=max_output_size_per_class,
+    #     iou_threshold=iou_threshold,
+    #     confidence_threshold=confidence_threshold)
+
+    # image = np.squeeze(image)
+    # plates = get_plates(image.copy(), boxes, classes, nums, class_names)
+    # img = draw_outputs(image, boxes, scores, classes, nums, class_names)
+    # imgutils.display_image(img, color=True)
+
+    # debug = False
+    # remove_noise = False
+    # for img in plates:
+    #     img = imgutils.resize_image(img, 200, 60)
+    #     img_gs = imgutils.get_binary(img)
+    #     img_noise_removed = imgutils.get_binary_remove_noise(img)
+    #     input_img = img_noise_removed if remove_noise else img_gs
+
+    #     if debug: imgutils.display_image(img_gs)
+    #     if debug: imgutils.display_image(img_noise_removed)
+
+    #     edges = cv2.Canny(input_img, 70, 400)  # img_gs  img_noise_removed
+
+    #     if debug: imgutils.display_image(edges)
+
+    #     contours, hierarchy = cv2.findContours(edges.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    #     img_copy = img.copy()
+    #     selected_regions, region_images = select_roi(img_copy, contours, intersect=True)
+
+    #     ocr_model = load_model('char_model')
+    #     print('License plate prediction: ', end='')
+    #     plate_text = ''
+    #     for image in region_images:
+    #         image = imgutils.resize_image(image, 30, 50)
+    #         image = imgutils.image_bin_to_clr(imgutils.invert(imgutils.get_binary_remove_noise(image)))
+    #         # imgutils.display_image(image)
+    #         img_array = np.array([image])
+    #         prediction = ocr_model.predict(img_array)
+    #         predicted_char = get_predicted_label(prediction)
+    #         print(predicted_char, end='')
+    #         plate_text += predicted_char
+    #     print()
+    #     cv2.putText(selected_regions, plate_text, (0, 15), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 1)
+    #     imgutils.display_image(selected_regions)
