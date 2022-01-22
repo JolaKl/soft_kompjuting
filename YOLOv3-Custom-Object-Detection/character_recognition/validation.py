@@ -66,9 +66,6 @@ validation_generator = validation_datagen.flow(
 
 model = load_model('char_model')
 
-# TODO VALIDATION
-
-
 
 def process_image_file_v(img_path, model, debug=False, remove_noise=False):
     if not os.path.isfile(img_path):
