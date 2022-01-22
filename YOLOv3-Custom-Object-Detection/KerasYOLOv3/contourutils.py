@@ -1,6 +1,4 @@
 import cv2
-from numpy import empty
-import imgutils
 from statistics import median
 
 
