@@ -43,25 +43,25 @@ def convert_to_bin(val_imgs):
 classes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-letter_pics = os.listdir('character_data_validation')
+letter_pics = os.listdir('character_data_test')
 letter_labels = [classes.index(fname.split('_')[0]) for fname in letter_pics]
-letter_pics = [os.path.join('character_data_validation', fname) for fname in letter_pics]
+letter_pics = [os.path.join('character_data_test', fname) for fname in letter_pics]
 sampled_letter_fnames = random.sample(letter_pics, 16)
 
-validation_datagen = ImageDataGenerator(rescale=1. / 255)
+test_datagen = ImageDataGenerator(rescale=1. / 255)
 
-validation_labels_enc = to_categorical(letter_labels)
+test_labels_enc = to_categorical(letter_labels)
 IMG_DIM = (50, 30)
 
-validation_imgs = [img_to_array(load_img(img, target_size=IMG_DIM)) for img in letter_pics]
-validation_imgs = convert_to_bin(validation_imgs)
+test_imgs = [img_to_array(load_img(img, target_size=IMG_DIM)) for img in letter_pics]
+test_imgs = convert_to_bin(test_imgs)
 
-validation_imgs = np.array(validation_imgs)
+test_imgs = np.array(test_imgs)
 test_labels = np.array(letter_labels)
 
-validation_generator = validation_datagen.flow(
-    validation_imgs,
-    validation_labels_enc
+test_generator = test_datagen.flow(
+    test_imgs,
+    test_labels_enc
 )
 
 model = load_model('char_model')
@@ -97,7 +97,7 @@ def process_image_v(image, model, debug=False, remove_noise=False):
     # imgutils.display_image(image, color=True)
 
 
-def validation(path, model):
+def testShow(path, model):
     letter_pics = os.listdir(path)
     for i in range(len(letter_pics)):
         process_image_file_v(path + letter_pics[i], model)
@@ -110,9 +110,9 @@ def get_predicted_label(prediction):
     return classes[prediction_index]
 
 
-def validate():
+def test():
     print('Evaluation:')
-    scoreSeg = model.evaluate(validation_generator)
+    scoreSeg = model.evaluate(test_generator)
     print("Accuracy = ", scoreSeg[1])
 
 
@@ -120,6 +120,6 @@ if __name__ == '__main__':
     show_predictions = False
 
     if show_predictions:
-        validation('./character_data_validation/', model)
+        testShow('./character_data_test/', model)
 
-    validate()
+    test()
